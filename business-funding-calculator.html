@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Business Funding Calculator | Utility Pilot</title>
+
+  <meta name="description"
+        content="Estimate business funding repayment, financing cost, and payment amounts using funding amount, factor rate, term, and payment frequency.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 20px 8%;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .calculator {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .intro {
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .results {
+      margin-top: 30px;
+      background: #f8fafc;
+      padding: 25px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-value {
+      font-weight: bold;
+    }
+
+    .disclaimer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      color: #0f172a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">Utility Pilot</a>
+</header>
+
+<div class="container">
+
+  <div class="calculator">
+
+    <h1>Business Funding Calculator</h1>
+
+    <p class="intro">
+      Estimate total repayment, financing cost, and payment amount for
+      factor-rate business funding.
+    </p>
+
+    <div class="form-grid">
+
+      <div>
+        <label for="fundingAmount">Funding Amount</label>
+        <input type="number" id="fundingAmount" placeholder="50000">
+      </div>
+
+      <div>
+        <label for="factorRate">Factor Rate</label>
+        <input type="number" id="factorRate" step="0.01" placeholder="1.30">
+      </div>
+
+      <div>
+        <label for="termMonths">Term in Months</label>
+        <input type="number" id="termMonths" placeholder="9">
+      </div>
+
+      <div>
+        <label for="frequency">Payment Frequency</label>
+        <select id="frequency">
+          <option value="monthly">Monthly</option>
+          <option value="weekly">Weekly</option>
+          <option value="daily">Daily</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button onclick="calculateFunding()">Calculate Funding</button>
+
+    <div class="results" id="results">
+
+      <div class="result-row">
+        <span>Funding Amount</span>
+        <span class="result-value" id="resultFunding">$0</span>
+      </div>
+
+      <div class="result-row">
+        <span>Total Repayment</span>
+        <span class="result-value" id="resultRepayment">$0</span>
+      </div>
+
+      <div class="result-row">
+        <span>Financing Cost</span>
+        <span class="result-value" id="resultCost">$0</span>
+      </div>
+
+      <div class="result-row">
+        <span>Estimated Payment</span>
+        <span class="result-value" id="resultPayment">$0</span>
+      </div>
+
+      <div class="result-row">
+        <span>Financing Cost as % of Funding</span>
+        <span class="result-value" id="resultPercent">0%</span>
+      </div>
+
+    </div>
+
+    <p class="disclaimer">
+      This calculator provides estimates for educational purposes only.
+      Actual funding offers may include fees, different payment schedules,
+      underwriting requirements, and other terms. Results are not financial,
+      lending, tax, legal, or investment advice.
+    </p>
+
+    <a class="back-link" href="index.html">← Back to Utility Pilot</a>
+
+  </div>
+
+</div>
+
+<script>
+
+function calculateFunding() {
+
+  const funding = parseFloat(document.getElementById("fundingAmount").value);
+  const factor = parseFloat(document.getElementById("factorRate").value);
+  const months = parseFloat(document.getElementById("termMonths").value);
+  const frequency = document.getElementById("frequency").value;
+
+  if (!funding || !factor || !months || funding <= 0 || factor <= 0 || months <= 0) {
+    alert("Please enter valid numbers in all fields.");
+    return;
+  }
+
+  const totalRepayment = funding * factor;
+  const financingCost = totalRepayment - funding;
+  const financingPercent = (financingCost / funding) * 100;
+
+  let numberOfPayments;
+
+  if (frequency === "monthly") {
+    numberOfPayments = months;
+  }
+
+  if (frequency === "weekly") {
+    numberOfPayments = months * 4.33;
+  }
+
+  if (frequency === "daily") {
+    numberOfPayments = months * 21;
+  }
+
+  const payment = totalRepayment / numberOfPayments;
+
+  document.getElementById("resultFunding").textContent =
+    formatMoney(funding);
+
+  document.getElementById("resultRepayment").textContent =
+    formatMoney(totalRepayment);
+
+  document.getElementById("resultCost").textContent =
+    formatMoney(financingCost);
+
+  document.getElementById("resultPayment").textContent =
+    formatMoney(payment);
+
+  document.getElementById("resultPercent").textContent =
+    financingPercent.toFixed(2) + "%";
+
+  document.getElementById("results").style.display = "block";
+}
+
+function formatMoney(number) {
+  return number.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+  });
+}
+
+</script>
+
+</body>
+</html>
+
