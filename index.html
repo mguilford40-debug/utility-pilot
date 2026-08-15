@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Utility Pilot | Free Online Tools</title>
+<title>Utility Pilot | Free Calculators & Online Tools</title>
 
-  <meta name="description"
-        content="Utility Pilot provides free online tools, calculators, and utilities for creators, businesses, and everyday users.">
+<meta name="description" content="Free calculators and online tools for business, money, work, creators, and everyday decisions. Fast, simple, and easy to use with Utility Pilot.">
+
 
   <style>
     * {
@@ -98,7 +98,73 @@
       color: white;
       text-align: center;
       padding: 25px;
-    }
+    }.tool-search {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+}
+
+.tool-search h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 28px;
+  color: #0f172a;
+}
+
+.tool-search p {
+  margin-bottom: 20px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 15px 18px;
+  font-size: 17px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #0f172a;
+}
+
+.search-box button {
+  padding: 15px 24px;
+  border: none;
+  border-radius: 8px;
+  background: #0f172a;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 650px) {
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+}
   </style>
 </head>
 
@@ -121,7 +187,20 @@
     professionals, and everyday users.
   </p>
 </section>
+<section class="tool-search">
+  <h2>Find a Calculator or Tool</h2>
+  <p>Search Utility Pilot for the tool you need.</p>
 
+  <div class="search-box">
+    <input
+      type="search"
+      id="toolSearch"
+      placeholder="Search calculators and tools..."
+      aria-label="Search calculators and tools"
+    >
+    <button type="button" id="searchButton">Search</button>
+  </div>
+</section>
 <section class="tools" id="tools">
 
   <h2>Popular Tools</h2>
@@ -150,6 +229,7 @@
   </div>
 </a>
   </div>
+
 
 </section>
 
