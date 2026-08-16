@@ -237,5 +237,36 @@
   © 2026 Utility Pilot. Free online tools for everyone.
 </footer>
 
+<script>
+  const searchInput = document.getElementById("toolSearch");
+  const searchButton = document.getElementById("searchButton");
+  const toolItems = document.querySelectorAll(
+    ".tool-grid > a, .tool-grid > .tool-card"
+  );
+
+  function searchTools() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+
+    toolItems.forEach((item) => {
+      const toolText = item.textContent.toLowerCase();
+
+      if (toolText.includes(searchTerm)) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  }
+
+  searchInput.addEventListener("input", searchTools);
+  searchButton.addEventListener("click", searchTools);
+
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      searchTools();
+    }
+  });
+</script>
+
 </body>
 </html>
